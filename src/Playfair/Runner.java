@@ -1,6 +1,9 @@
 package Playfair;
 
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Runner {
 
@@ -45,7 +48,8 @@ public class Runner {
 			        int iterationsOnTemp = sc.nextInt();
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					String cipherText = "word";
+					
+					String cipherText = sc.nextLine();
 					
 					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
 					
@@ -64,20 +68,22 @@ public class Runner {
 				try
 				{
 					sc.nextLine();
-					System.out.println("Enter cipher text to solve:");
+					System.out.println("Set key to create cipher for SA to solve:");
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
 					
-					System.out.println("Enter a Max Temp Field:");
+					System.out.println("Enter max temperature:");
 					double maxTemp = sc.nextDouble();
-			        System.out.println("Enter tempStepField:");
+			        System.out.println("Enter temperature steps:");
 			        double step = sc.nextDouble();
-			        System.out.println("Enter iterationsField:");
+			        System.out.println("Enter total iterations:");
 			        int iterationsOnTemp = sc.nextInt();
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					String cipherText = "word";
+					
+					String cipherText = sc.nextLine();
+					System.out.println(cipherText);
 					
 					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
 					
@@ -92,6 +98,80 @@ public class Runner {
 					e.printStackTrace();
 				}
 			}else if(choice == 4) {
+				System.out.println("SA selected!");
+				try
+				{
+					sc.nextLine();
+					System.out.println("Set key to create cipher for SA to solve:");
+			        String solution = sc.nextLine();
+			        System.out.println(solution);
+					Playfair sol = new Playfair(solution);
+					
+					System.out.println("Enter max temperature:");
+					double maxTemp = sc.nextDouble();
+			        System.out.println("Enter temperature steps:");
+			        double step = sc.nextDouble();
+			        System.out.println("Enter total iterations:");
+			        int iterationsOnTemp = sc.nextInt();
+			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
+					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
+					
+					String cipherText = readFile();
+					System.out.println(cipherText);
+					
+					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
+					
+					PlayfairKey key = sa.findKey(cipherText);
+					Playfair pf = new Playfair(key);
+					String plainText = pf.decrypt(cipherText);
+					System.out.println(plainText);
+					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(choice == 5) {
+				System.out.println("SA selected!");
+				try
+				{
+					sc.nextLine();
+					System.out.println("Set key to create cipher for SA to solve:");
+			        String solution = sc.nextLine();
+			        System.out.println(solution);
+					Playfair sol = new Playfair(solution);
+					
+					System.out.println("Enter max temperature:");
+					double maxTemp = sc.nextDouble();
+			        System.out.println("Enter temperature steps:");
+			        double step = sc.nextDouble();
+			        System.out.println("Enter total iterations:");
+			        int iterationsOnTemp = sc.nextInt();
+			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
+					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
+					
+					String cipherText = readFile();
+					System.out.println(cipherText);
+					
+					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
+					
+					PlayfairKey key = sa.findKey(cipherText);
+					Playfair pf = new Playfair(key);
+					String plainText = pf.decrypt(cipherText);
+					System.out.println(plainText);
+					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(choice == 6) {
 				System.out.println("Closing Playfair...");
 				sc.close();
 				SENTINAL = false;
@@ -102,4 +182,27 @@ public class Runner {
 		}//while end
 	}
 
+	static String readFile() throws IOException {
+		Scanner in = new Scanner(System.in);
+		System.out.print("Enter the name of the txt file you want to encrypt: ");
+		String fileName = in.nextLine();
+		
+	    BufferedReader br = new BufferedReader(new FileReader(fileName + ".txt"));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	        	//System.out.println(line);
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	    	in.close();
+	        br.close();
+	    }
+	}
 }
+
