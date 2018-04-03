@@ -14,7 +14,8 @@ public class Runner {
 			System.out.println("Enter a number to select an option:");
 			System.out.println("1. Would you like to encrypt a word?");
 			System.out.println("2. Would you like to apply SA?");
-			System.out.println("3. QUIT");
+			System.out.println("3. SA Quad");
+			System.out.println("4. QUIT");
 			int choice = sc.nextInt();
 			
 			if(choice == 1) {
@@ -46,7 +47,7 @@ public class Runner {
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
 					String cipherText = "word";
 					
-					System.out.println("Solution is on: " + sa.getFitness(cipherText, sol));
+					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText);
 					Playfair pf = new Playfair(key);
@@ -59,6 +60,38 @@ public class Runner {
 					e.printStackTrace();
 				}
 			}else if(choice == 3) {
+				System.out.println("SA selected!");
+				try
+				{
+					sc.nextLine();
+					System.out.println("Enter cipher text to solve:");
+			        String solution = sc.nextLine();
+			        System.out.println(solution);
+					Playfair sol = new Playfair(solution);
+					
+					System.out.println("Enter a Max Temp Field:");
+					double maxTemp = sc.nextDouble();
+			        System.out.println("Enter tempStepField:");
+			        double step = sc.nextDouble();
+			        System.out.println("Enter iterationsField:");
+			        int iterationsOnTemp = sc.nextInt();
+			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
+					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
+					String cipherText = "word";
+					
+					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
+					
+					PlayfairKey key = sa.findKey(cipherText);
+					Playfair pf = new Playfair(key);
+					String plainText = pf.decrypt(cipherText);
+					System.out.println(plainText);
+					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+				}
+				catch (NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
+			}else if(choice == 4) {
 				System.out.println("Closing Playfair...");
 				sc.close();
 				SENTINAL = false;

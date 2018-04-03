@@ -16,6 +16,11 @@ public class SimulatedAnnealing {
 		String candidate = playfair.decrypt(cipherText);
 		return BigramFrequencyRepository.getInstance().getTextFitness(candidate);
 	}
+	public double getQuadFitness(String cipherText, Playfair playfair)
+	{
+		String candidate = playfair.decrypt(cipherText);
+		return QuadgramFrequencyRepository.getInstance().getTextFitness(candidate);
+	}
 	public PlayfairKey findKey(String cipherText)
 	{	
 		double bestFitness = Double.NEGATIVE_INFINITY;
