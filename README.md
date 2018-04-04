@@ -38,7 +38,23 @@ The key table is a 5×5 grid of letters that will act as the key for encrypting 
 Each of the 25 letters must be unique and one letter of the alphabet (usually Q or J) is removed from the 
 table (as there are 25 spots and 26 letters in the alphabet). In a playfair cipher the message is split into digraphs, 
 typically pairs of two letters or four letters, this is what the "2grams.txt" and "4grams.txt" files are provided for
-in the repository.
+in the repository. When selecting options 2-5 fro the menu the program will use the gram.txt files with the Simulated Annealing algorithm
+to break the code provided by the user.
+
+## What is Simulated Annealing?
+Simulated Annealing (SA) is an effective way of dealing with the problems presented in the hill climbing algorithm by adding a random temature variable to reposisition
+the current node of the search and help find a possible better solution for the user. Simulated annealing is typically used in discrete, but very large, configuration spaces, 
+such as the set of possible orders of cities in the Traveling Salesman problem and in VLSI routing. It has a broad range of application that is still being explored.
+
+```
+Let s = s0
+    For k = 0 through kmax (exclusive):
+    T ← temperature(k ∕ kmax)
+    Pick a random neighbour, snew ← neighbour(s)
+    If P(E(s), E(snew), T) ≥ random(0, 1):
+        s ← snew
+Output: the final state s
+```
 
 
 ### References:
