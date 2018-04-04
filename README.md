@@ -64,7 +64,6 @@ Output: the final state s
 
 - Step 3. Enter a number to select an option
 
-Inline-style: 
 ![Menu](jarscreen.png "Menu")
 
 ### References:
