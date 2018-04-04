@@ -56,7 +56,18 @@ Let s = s0
 Output: the final state s
 ```
 
+### Instructions to run project:
+
+- Step 1. Navigate to .jar location in command line
+
+- Step 2. java -cp Playfair.jar ie.gmit.sw.ai.Runner
+
+- Step 3. Enter a number to select an option
+
+Inline-style: 
+![Menu](jarscreen.png "Menu")
 
 ### References:
 - [Simulated Annealing](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/anneal.html)
 - [Playfair cipher](https://learncryptography.com/classical-encryption/playfair-cipher)
+- [SA Sudo](https://en.wikipedia.org/wiki/Simulated_annealing#Pseudocode)
