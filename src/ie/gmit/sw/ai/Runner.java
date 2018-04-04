@@ -15,6 +15,7 @@ public class Runner {
 		
 		while(SENTINAL != false) {
 			
+			// Main menu for user
 			System.out.println("Enter a number to select an option:");
 			System.out.println("1. Would you like to encrypt a word?");
 			System.out.println("2. Would you like to apply SA to input(2grams)?");
@@ -26,6 +27,9 @@ public class Runner {
 			int choice = sc.nextInt();
 			
 			if(choice == 1) {
+				/* This option creates a cipher table with a key input by the user,
+				 * it then asks the user for some text to encrypt and prints the encrypted
+				 * text on the screen for the user to copy and use*/
 				sc.nextLine();
 		        System.out.println("Enter a key:");
 		        String key = sc.next();
@@ -33,12 +37,14 @@ public class Runner {
 				System.out.println("Enter text to ecrypt:");
 				sc.nextLine();
 				String text = sc.next();
-				
 				System.out.println(playfair.encrypt(text));
 			}else if(choice == 2) {
 				System.out.println("SA selected!");
 				try
 				{
+					/* This option will use Simulated Annealing to attempt to break playfair cipher encrypted code
+					 * thats provided by the users keyboard, it will use the 2grams text file which should provide a more
+					 * accurate result and algorithm frequency*/
 					sc.nextLine();
 					System.out.println("Enter cipher text to solve:");
 			        String solution = sc.nextLine();
@@ -72,6 +78,9 @@ public class Runner {
 				System.out.println("SA selected!");
 				try
 				{
+					/* This option will use Simulated Annealing to attempt to break playfair cipher encrypted code
+					 * thats provided by the users keyboard, it will use the 4grams text file to calculate the
+					 * result and algorithm frequency*/
 					sc.nextLine();
 					System.out.println("Set key to create cipher for SA to solve:");
 			        String solution = sc.nextLine();
@@ -106,6 +115,9 @@ public class Runner {
 				System.out.println("SA selected!");
 				try
 				{
+					/* This option will use Simulated Annealing to attempt to break playfair cipher encrypted code
+					 * thats provided by a text file in the MyFiles folder, it will use the 2grams text file which should provide a more
+					 * accurate result and algorithm frequency*/
 					sc.nextLine();
 					System.out.println("Set key to create cipher for SA to solve:");
 			        String solution = sc.nextLine();
@@ -146,6 +158,9 @@ public class Runner {
 				System.out.println("SA selected!");
 				try
 				{
+					/* This option will use Simulated Annealing to attempt to break playfair cipher encrypted code
+					 * thats provided by a text file from the MyFiles folder, it will use the 4grams text file to calculate the
+					 * result and algorithm frequency*/
 					sc.nextLine();
 					System.out.println("Set key to create cipher for SA to solve:");
 			        String solution = sc.nextLine();
@@ -183,16 +198,16 @@ public class Runner {
 					e.printStackTrace();
 				}
 			}else if(choice == 6) {
+				/* This option allows the user to manually decode the cipher text by entering a key*/
+			    sc.nextLine();
+		        System.out.println("Enter a key:");
+		        String key = sc.next();
+				Playfair playfair = new Playfair(key);
+				System.out.println("Enter text to decrypt:");
 				sc.nextLine();
-			    System.out.println("Please input the keyword for the Playfair cipher.");
-			    String key = sc.nextLine();
-			    key = key.toUpperCase().replaceAll("[^A-Za-z0-9 ]", "");
-			    System.out.println("Please enter text you want decoded.");
-			    String text = sc.nextLine();
-			    Decrypt decrypt = new Decrypt(key, text);
-			    String msg = decrypt.decode();
-			    System.out.println("Results:");
-			    System.out.println(msg);
+				String text = sc.next();
+				text = text.toUpperCase().replaceAll("[^A-Za-z0-9 ]", "");
+				System.out.println(playfair.decrypt(text));
 			}else if(choice == 7) {
 				System.out.println("Closing Playfair...");
 				sc.close();
