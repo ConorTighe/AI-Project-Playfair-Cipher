@@ -1,19 +1,19 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BigramFrequencyRepository implements FrequencyRepository{
+public class BigramFrequency implements FrequencyPlan{
 
 	//private static final double MINIMUM_SCORE = -10;
-	private static BigramFrequencyRepository instance;
-	public static BigramFrequencyRepository getInstance() {
-		if (instance==null) instance = new BigramFrequencyRepository();
+	private static BigramFrequency instance;
+	public static BigramFrequency getInstance() {
+		if (instance==null) instance = new BigramFrequency();
 		return instance;
 	}
 	private Map<String,Double> scores;
-	private BigramFrequencyRepository ()
+	private BigramFrequency ()
 	{
 		try {
 			Map<String,Double> frequencies = FrequencyParser.getBigramFrequencies();
@@ -93,7 +93,6 @@ public class BigramFrequencyRepository implements FrequencyRepository{
 			{
 				scores.put(entry.getKey(), Math.log(entry.getValue()));
 			}
-			System.out.println(scores);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -1,4 +1,4 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 import java.util.Scanner;
 import java.io.BufferedReader;
@@ -6,9 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Runner {
-
+	
 	public static void main(String[] args) {
-		System.out.print("Playfair Cipher Project - G00314417");
+		System.out.println("Playfair Cipher Project - G00314417");
+		System.out.println("-------------------------------------");
 		boolean SENTINAL = true;
 		Scanner sc = new Scanner(System.in);
 		
@@ -16,9 +17,12 @@ public class Runner {
 			
 			System.out.println("Enter a number to select an option:");
 			System.out.println("1. Would you like to encrypt a word?");
-			System.out.println("2. Would you like to apply SA?");
-			System.out.println("3. SA Quad");
-			System.out.println("4. QUIT");
+			System.out.println("2. Would you like to apply SA to input(2grams)?");
+			System.out.println("3. Would you like to apply SA to input(4grams)?");
+			System.out.println("4. Would you like to apply SA to a text file(2grams)?");
+			System.out.println("5. Would you like to apply SA to a text file(4grams)?");
+			System.out.println("6. Would you like to decrypt a word?");
+			System.out.println("7. QUIT");
 			int choice = sc.nextInt();
 			
 			if(choice == 1) {
@@ -27,6 +31,7 @@ public class Runner {
 		        String key = sc.next();
 				Playfair playfair = new Playfair(key);
 				System.out.println("Enter text to ecrypt:");
+				sc.nextLine();
 				String text = sc.next();
 				
 				System.out.println(playfair.encrypt(text));
@@ -48,7 +53,7 @@ public class Runner {
 			        int iterationsOnTemp = sc.nextInt();
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					
+					sc.nextLine();
 					String cipherText = sc.nextLine();
 					
 					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
@@ -81,7 +86,7 @@ public class Runner {
 			        int iterationsOnTemp = sc.nextInt();
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					
+					sc.nextLine();
 					String cipherText = sc.nextLine();
 					System.out.println(cipherText);
 					
@@ -116,7 +121,10 @@ public class Runner {
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
 					
-					String cipherText = readFile();
+					System.out.print("Enter the name of the txt file you want to encrypt: ");
+					sc.nextLine();
+					String fileName = sc.nextLine();
+					String cipherText = readFile(fileName);
 					System.out.println(cipherText);
 					
 					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
@@ -153,7 +161,10 @@ public class Runner {
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
 					
-					String cipherText = readFile();
+					System.out.print("Enter the name of the txt file you want to encrypt: ");
+					sc.nextLine();
+					String fileName = sc.nextLine();
+					String cipherText = readFile(fileName);
 					System.out.println(cipherText);
 					
 					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
@@ -172,6 +183,17 @@ public class Runner {
 					e.printStackTrace();
 				}
 			}else if(choice == 6) {
+				sc.nextLine();
+			    System.out.println("Please input the keyword for the Playfair cipher.");
+			    String key = sc.nextLine();
+			    key = key.toUpperCase().replaceAll("[^A-Za-z0-9 ]", "");
+			    System.out.println("Please enter text you want decoded.");
+			    String text = sc.nextLine();
+			    Decrypt decrypt = new Decrypt(key, text);
+			    String msg = decrypt.decode();
+			    System.out.println("Results:");
+			    System.out.println(msg);
+			}else if(choice == 7) {
 				System.out.println("Closing Playfair...");
 				sc.close();
 				SENTINAL = false;
@@ -182,12 +204,10 @@ public class Runner {
 		}//while end
 	}
 
-	static String readFile() throws IOException {
-		Scanner in = new Scanner(System.in);
-		System.out.print("Enter the name of the txt file you want to encrypt: ");
-		String fileName = in.nextLine();
+	static String readFile(String fileName) throws IOException {
 		
-	    BufferedReader br = new BufferedReader(new FileReader(fileName + ".txt"));
+		System.out.println("file:" + fileName);
+	    BufferedReader br = new BufferedReader(new FileReader("MyFiles\\" + fileName + ".txt"));
 	    try {
 	        StringBuilder sb = new StringBuilder();
 	        String line = br.readLine();
@@ -200,7 +220,6 @@ public class Runner {
 	        }
 	        return sb.toString();
 	    } finally {
-	    	in.close();
 	        br.close();
 	    }
 	}

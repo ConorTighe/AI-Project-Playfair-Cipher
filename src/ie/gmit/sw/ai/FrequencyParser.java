@@ -1,4 +1,4 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -17,21 +17,21 @@ public class FrequencyParser {
 	    return s.hasNext() ? s.next() : "";
 	}
 	private static Map<String,Double> getFrequencies(String path) throws FileNotFoundException {
-		//System.out.println("path" +path);
 		Map<String,Double> frequencies = new HashMap<String, Double>();
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(path));
 		String allText = convertStreamToString(in);
-		Map<String,Double> count = new HashMap<String, Double>();
+		Map<String,Long> count = new HashMap<String,Long>();
 		long totalCnt = 0;
-		System.out.println("Calculating Frequencies..");
 		for (String current : allText.split("\n"))
 		{
 			String [] split = current.split(" ");
-			double cnt = Double.parseDouble(split[1]);
+			double tempcnt = Double.parseDouble(split[1]);
+			long cnt = (long)tempcnt;
+			//System.out.println("cnt: " + cnt);
 			count.put(split[0], cnt);
 			totalCnt+=cnt;
 		}
-		for (Entry<String, Double> entry : count.entrySet())
+		for (Entry<String, Long> entry : count.entrySet())
 		{
 			frequencies.put(entry.getKey(), (entry.getValue()+0.0)/totalCnt);
 		}

@@ -1,4 +1,4 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 public class SimulatedAnnealing {
 	
@@ -14,12 +14,12 @@ public class SimulatedAnnealing {
 	public double getFitness(String cipherText, Playfair playfair)
 	{
 		String candidate = playfair.decrypt(cipherText);
-		return BigramFrequencyRepository.getInstance().getTextFitness(candidate);
+		return BigramFrequency.getInstance().getTextFitness(candidate);
 	}
 	public double getQuadFitness(String cipherText, Playfair playfair)
 	{
 		String candidate = playfair.decrypt(cipherText);
-		return QuadgramFrequencyRepository.getInstance().getTextFitness(candidate);
+		return QuadgramFrequency.getInstance().getTextFitness(candidate);
 	}
 	public PlayfairKey findKey(String cipherText)
 	{	

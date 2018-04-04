@@ -1,4 +1,4 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 import java.util.ArrayList;
 import java.util.List;

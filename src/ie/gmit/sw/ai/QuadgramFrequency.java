@@ -1,18 +1,18 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuadgramFrequencyRepository implements FrequencyRepository {
+public class QuadgramFrequency implements FrequencyPlan {
 	private double minValue = Double.POSITIVE_INFINITY;
-	private static QuadgramFrequencyRepository instance;
-	public static QuadgramFrequencyRepository getInstance() {
-		if (instance==null) instance = new QuadgramFrequencyRepository();
+	private static QuadgramFrequency instance;
+	public static QuadgramFrequency getInstance() {
+		if (instance==null) instance = new QuadgramFrequency();
 		return instance;
 	}
 	private Map<String,Double> scores;
-	private QuadgramFrequencyRepository ()
+	private QuadgramFrequency ()
 	{
 		try {
 			Map<String,Double> frequencies = FrequencyParser.getQuadgramFrequencies();

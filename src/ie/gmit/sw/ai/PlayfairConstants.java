@@ -1,4 +1,4 @@
-package Playfair;
+package ie.gmit.sw.ai;
 
 public class PlayfairConstants {
 	public static char EQUAL_CHAR1='I';
