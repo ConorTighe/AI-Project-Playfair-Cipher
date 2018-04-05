@@ -66,6 +66,9 @@ Output: the final state s
 
 ![Menu](jarscreen.png "Menu")
 
+## Project UML:
+![AI](AI_Project_Playfair.png "AI Project")
+
 ### References:
 - [Simulated Annealing](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/anneal.html)
 - [Playfair cipher](https://learncryptography.com/classical-encryption/playfair-cipher)
