@@ -51,29 +51,30 @@ public class Runner {
 				{
 					/* This option will use Simulated Annealing to attempt to break playfair cipher encrypted code
 					 * thats provided by the users keyboard, it will use the 2grams text file which should provide a more
-					 * accurate result and algorithm frequency*/
+					 * accurate result and algorithm frequency, it will then print the result out to a text file*/
 					sc.nextLine();
-					System.out.println("Enter key to create table:");
+					System.out.println("Set key to create cipher for SA to solve:");
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
 					
-					System.out.println("Enter a Max Temp Field:");
+					System.out.println("Enter max temperature:");
 					double maxTemp = sc.nextDouble();
-			        System.out.println("Enter tempStepField:");
+			        System.out.println("Enter temperature steps:");
 			        double step = sc.nextDouble();
-			        System.out.println("Enter iterationsField:");
+			        System.out.println("Enter total iterations:");
 			        int iterationsOnTemp = sc.nextInt();
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					sc.next();
+					sc.nextLine();
+					System.out.println("Enter code you need decrypted:");
 					String cipherText = sc.nextLine();
 					
-					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
+					System.out.println("SA fitness: " + sa.getFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText);
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
-					System.out.println(plainText);
+					System.out.println("plain: " + plainText);
 					System.out.println("Maximum fitness found : " + sa.getFitness(cipherText, pf));
 					try {
 						writeResult("SA attempt(2Grams) PlainText",plainText);
@@ -108,8 +109,8 @@ public class Runner {
 			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
 					sc.nextLine();
+					System.out.println("Enter code you need decrypted:");
 					String cipherText = sc.nextLine();
-					System.out.println(cipherText);
 					
 					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
 					
