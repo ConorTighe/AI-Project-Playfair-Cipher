@@ -66,6 +66,9 @@ Output: the final state s
 
 ![Menu](jarscreen.png "Menu")
 
+From here you can choose to encrypt, decrypt or apply simulated annealing to playfair encryted code. The user can set the maximum tempature used, the steps in tempature each move will take and the total iterations applied to the code, the user should play around with these values as they will vary the results. Once a result is reached they will be printed to a text file called results.txt which will be stored in the MyFiles folder of the
+application.
+
 ## Project UML:
 ![AI](AI_Project_Playfair.png "AI Project")
 
