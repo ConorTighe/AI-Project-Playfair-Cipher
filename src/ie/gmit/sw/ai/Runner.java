@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Runner {
 	
@@ -14,7 +15,6 @@ public class Runner {
 		Scanner sc = new Scanner(System.in);
 		
 		while(SENTINAL != false) {
-			
 			// Main menu for user
 			System.out.println("Enter a number to select an option:");
 			System.out.println("1. Would you like to encrypt a word?");
@@ -36,8 +36,15 @@ public class Runner {
 				Playfair playfair = new Playfair(key);
 				System.out.println("Enter text to ecrypt:");
 				sc.nextLine();
-				String text = sc.next();
-				System.out.println(playfair.encrypt(text));
+				String text = sc.nextLine();
+				String result = playfair.encrypt(text);
+				try {
+					writeResult("CipherText",result);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}else if(choice == 2) {
 				System.out.println("SA selected!");
 				try
@@ -46,7 +53,7 @@ public class Runner {
 					 * thats provided by the users keyboard, it will use the 2grams text file which should provide a more
 					 * accurate result and algorithm frequency*/
 					sc.nextLine();
-					System.out.println("Enter cipher text to solve:");
+					System.out.println("Enter key to create table:");
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
@@ -57,9 +64,8 @@ public class Runner {
 			        double step = sc.nextDouble();
 			        System.out.println("Enter iterationsField:");
 			        int iterationsOnTemp = sc.nextInt();
-			        System.out.println(maxTemp+ " " + step + " " + iterationsOnTemp);
 					SimulatedAnnealing sa = new SimulatedAnnealing(maxTemp, step, iterationsOnTemp);
-					sc.nextLine();
+					sc.next();
 					String cipherText = sc.nextLine();
 					
 					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
@@ -69,6 +75,12 @@ public class Runner {
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
 					System.out.println("Maximum fitness found : " + sa.getFitness(cipherText, pf));
+					try {
+						writeResult("SA attempt(2Grams) PlainText",plainText);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				catch (NumberFormatException e)
 				{
@@ -106,6 +118,12 @@ public class Runner {
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
 					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+					try {
+						writeResult("SA(4Grams) attempt PlainText",plainText);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				catch (NumberFormatException e)
 				{
@@ -145,7 +163,13 @@ public class Runner {
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
-					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+					System.out.println("Maximum fitness found : " + sa.getFitness(cipherText, pf));
+					try {
+						writeResult("SA(2Grams) attempt PlainText",plainText);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				catch (NumberFormatException e)
 				{
@@ -189,6 +213,12 @@ public class Runner {
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
 					System.out.println("Maximum fitness found : " + sa.getQuadFitness(cipherText, pf));
+					try {
+						writeResult("SA(4Grams) attempt PlainText",plainText);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				catch (NumberFormatException e)
 				{
@@ -207,7 +237,13 @@ public class Runner {
 				sc.nextLine();
 				String text = sc.next();
 				text = text.toUpperCase().replaceAll("[^A-Za-z0-9 ]", "");
-				System.out.println(playfair.decrypt(text));
+				String plainText =playfair.decrypt(text);
+				try {
+					writeResult("PlainText",plainText);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}else if(choice == 7) {
 				System.out.println("Closing Playfair...");
 				sc.close();
@@ -215,7 +251,7 @@ public class Runner {
 			}else {
 				System.out.println("Try again");
 			}
-			
+			sc.nextLine();
 		}//while end
 	}
 
@@ -237,6 +273,15 @@ public class Runner {
 	    } finally {
 	        br.close();
 	    }
+	}
+	
+	static void writeResult(String txtType, String result) throws IOException {
+		System.out.println(result);
+		//Print the result to result.txt in MyFiles
+		try (PrintWriter out = new PrintWriter("MyFiles\\result.txt")) {
+		    out.println(txtType + ": " + result);
+		    System.out.println("result written to result.txt in MyFiles");
+		}
 	}
 }
 

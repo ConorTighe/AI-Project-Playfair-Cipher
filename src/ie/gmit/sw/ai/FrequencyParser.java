@@ -27,7 +27,6 @@ public class FrequencyParser {
 			String [] split = current.split(" ");
 			double tempcnt = Double.parseDouble(split[1]);
 			long cnt = (long)tempcnt;
-			//System.out.println("cnt: " + cnt);
 			count.put(split[0], cnt);
 			totalCnt+=cnt;
 		}

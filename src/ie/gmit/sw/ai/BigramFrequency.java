@@ -6,9 +6,10 @@ import java.util.Map;
 
 public class BigramFrequency implements FrequencyPlan{
 
-	//private static final double MINIMUM_SCORE = -10;
+	// Make this class a singleton
 	private static BigramFrequency instance;
 	public static BigramFrequency getInstance() {
+		// if none create new BigramFrequency Instance
 		if (instance==null) instance = new BigramFrequency();
 		return instance;
 	}
@@ -16,20 +17,28 @@ public class BigramFrequency implements FrequencyPlan{
 	private BigramFrequency ()
 	{
 		try {
+			// Map for storing parsed frequencies 
 			Map<String,Double> frequencies = FrequencyParser.getBigramFrequencies();
 			
+			// Move though alphabet
 			for (char i='A';i<='Z';i++)
 			{
+				// If NOT a defined PlayfairConstant(Letter Q or J, X for dups)
 				if (i!=PlayfairConstants.EQUAL_CHAR2)
 				{
+					// Build a string and apply estimated CHAR
 					StringBuilder sb = new StringBuilder();
+					// ADD Q constant
 					sb.append(PlayfairConstants.EQUAL_CHAR2);
 					sb.append(i);
+					// GET 2grams and pass to map
 					double toAdd = frequencies.get(sb.toString());
 					frequencies.put(sb.toString(),0.0);
 					sb= new StringBuilder();
+					// ADD J constant
 					sb.append(PlayfairConstants.EQUAL_CHAR1);
 					sb.append(i);
+					// GET 2grams and pass to map
 					double freq=frequencies.get(sb.toString());
 					frequencies.put(sb.toString(), freq+toAdd);
 					
@@ -97,10 +106,7 @@ public class BigramFrequency implements FrequencyPlan{
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
-		getInstance();
-	}
-	@Override
+	// Return fitness results
 	public double getTextFitness(String text) {
 		double result = 0;
 		String preptext = TextUtils.prepareText(text);

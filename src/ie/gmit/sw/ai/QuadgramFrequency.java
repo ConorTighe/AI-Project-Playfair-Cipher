@@ -29,9 +29,6 @@ public class QuadgramFrequency implements FrequencyPlan {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
-		getInstance();
-	}
 	@Override
 	public double getTextFitness(String text) {
 		double result = 0;
