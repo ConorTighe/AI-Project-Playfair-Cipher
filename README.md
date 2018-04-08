@@ -42,7 +42,7 @@ in the repository. When selecting options 2-5 fro the menu the program will use 
 to break the code provided by the user.
 
 ## What is Simulated Annealing?
-Simulated Annealing (SA) is an effective way of dealing with the problems presented in the hill climbing algorithm by adding a random temature variable to reposisition
+Simulated Annealing (SA) is an effective way of dealing with the problems presented in the hill climbing algorithm by adding a random tempature variable to reposisition
 the current node of the search and help find a possible better solution for the user. Simulated annealing is typically used in discrete, but very large, configuration spaces, 
 such as the set of possible orders of cities in the Traveling Salesman problem and in VLSI routing. It has a broad range of application that is still being explored.
 
