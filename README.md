@@ -56,11 +56,20 @@ Let s = s0
 Output: the final state s
 ```
 
+## What is the fisher-yates shuffle?
+This is the algorithm we use to move the elements in the key around when trying new keys around, The Fisher–Yates shuffle is an algorithm for generating a random sequence of elements. The modern version of the Fisher–Yates shuffle, designed for computer use, was introduced by Richard Durstenfeld in 1964. Below you can see sudo code of how to achevie this randomization.
+
+```
+for i from 0 to n−2 do
+     j ← random integer such that i ≤ j < n
+     exchange a[i] and a[j]
+```
+
 ### Instructions to run project:
 
 - Step 1. Navigate to .jar location in command line
 
-- Step 2. java -cp Playfair.jar ie.gmit.sw.ai.Runner
+- Step 2. java –cp ./playfair.jar ie.gmit.sw.ai.CipherBreaker
 
 - Step 3. Enter a number to select an option
 
@@ -76,3 +85,4 @@ application. I tried to make the command line UI offer as much choice as possibl
 - [Simulated Annealing](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/learn-43/lib/photoz/.g/web/glossary/anneal.html)
 - [Playfair cipher](https://learncryptography.com/classical-encryption/playfair-cipher)
 - [SA Sudo](https://en.wikipedia.org/wiki/Simulated_annealing#Pseudocode)
+- [Fisher-yeats](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)

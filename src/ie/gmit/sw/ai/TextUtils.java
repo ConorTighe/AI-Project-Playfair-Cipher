@@ -12,7 +12,7 @@ public class TextUtils {
 
 	/***
 	 * For doing operations with the text before certain jobs
-	 * @void Turn text all uppercase
+	 * @return Turn text all uppercase
 	 * @return Prepare key for cipher under playfair rules, apply constants
 	 * @return get text ready for playfair
 	 * @return get list of diagrams

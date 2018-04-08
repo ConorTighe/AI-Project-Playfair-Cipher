@@ -14,7 +14,7 @@ import java.io.PrintWriter;
  * the optimization formula to generate the tempatures etc.
  * along with the creation of the .txt files containing the results of the playfair calculations
  */
-public class Runner {
+public class CipherBreaker {
 	
 	/***
 	 * If statements and a while to create a command line UI

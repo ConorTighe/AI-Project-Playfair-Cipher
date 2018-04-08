@@ -14,7 +14,7 @@ public class BigramFrequency implements FrequencyPlan{
 	/***
 	 * Uses the singlton design pattern for the 2gram diagrams 
 	 * @return fitness results
-	 * @void Inform user of text file used
+	 * @return Inform user of text file used
 	 */
 	// Make this class a singleton
 	private static BigramFrequency instance;

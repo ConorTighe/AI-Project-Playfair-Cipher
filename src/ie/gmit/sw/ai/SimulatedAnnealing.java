@@ -1,5 +1,7 @@
 package ie.gmit.sw.ai;
 
+import java.util.concurrent.TimeUnit;
+
 /***
  * 
  * @author Conor Tighe
@@ -67,7 +69,7 @@ public class SimulatedAnnealing {
 		Playfair playfair= new Playfair(parent);
 		// calculate current node fitness
 		double parentFitness = getFitness(cipherText, playfair);
-		
+		long startTime = System.currentTimeMillis();
 		// move through out nodes using tempature values
 		for (double temp = maxTemp; temp>0; temp-=step)
 		{
@@ -80,6 +82,7 @@ public class SimulatedAnnealing {
 			{
 				// create child node of parent
 				PlayfairKey child = parent.makeChildKey();
+				
 				// set new key using child
 				playfair.setKey(child);
 				// get child fitness
@@ -104,6 +107,12 @@ public class SimulatedAnnealing {
 				}
 			}
 		}
+		
+		long stopTime = System.currentTimeMillis();
+	    long elapsedTime = stopTime - startTime;
+	    long seconds = TimeUnit.MILLISECONDS.toSeconds(elapsedTime);
+	    System.out.println("SA complete in " + seconds + " seconds");
+	    
 		// return back our best key 
 		return bestKey;
 	}
