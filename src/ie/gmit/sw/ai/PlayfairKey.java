@@ -276,7 +276,7 @@ public class PlayfairKey {
 	public PlayfairKey makeChildKeyFromMatrix() {
 		// mimic current matrix
 	    char[] newMatrix = matrix.clone();
-		Random r = new Random();
+	    SecureRandom r = new SecureRandom();
 		int num = r.nextInt(100);
 		int a,b;
 		// manipulate child depending on generate case
