@@ -4,14 +4,28 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * 
+ * @author Conor Tighe
+ * This is the class that handles that calculation of the frequencies using the 4gram diagrams
+ */
 public class QuadgramFrequency implements FrequencyPlan {
+	
+	/***
+	 * Uses the singlton design pattern for the 4gram diagrams 
+	 * @return fitness results
+	 * @void Inform user of txt file used
+	 */
+	
 	private double minValue = Double.POSITIVE_INFINITY;
+	// make this class a singlton
 	private static QuadgramFrequency instance;
 	public static QuadgramFrequency getInstance() {
 		if (instance==null) instance = new QuadgramFrequency();
 		return instance;
 	}
 	private Map<String,Double> scores;
+	// where the quad scores get calculated
 	private QuadgramFrequency ()
 	{
 		try {
@@ -23,13 +37,14 @@ public class QuadgramFrequency implements FrequencyPlan {
 				scores.put(entry.getKey(), val);
 				if (minValue > val) minValue = val;
 			}
-			System.out.println(minValue);
+			//System.out.println(minValue);
 			//System.out.println(scores);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	@Override
+	// return the fitness of the frequencies
 	public double getTextFitness(String text) {
 		double result = 0;
 		String preptext = TextUtils.prepareText(text);
@@ -41,5 +56,9 @@ public class QuadgramFrequency implements FrequencyPlan {
 			else result += minValue;
 		}
 		return result;
+	}
+	@Override
+	public void getGram() {
+		System.out.println("Using the 2grams.txt file..");
 	}
 }

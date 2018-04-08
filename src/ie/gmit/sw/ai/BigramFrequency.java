@@ -4,8 +4,18 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * 
+ * @author Conor Tighe
+ * This is the class that handles that calculation of the frequencies using the 2gram diagrams
+ */
 public class BigramFrequency implements FrequencyPlan{
 
+	/***
+	 * Uses the singlton design pattern for the 2gram diagrams 
+	 * @return fitness results
+	 * @void Inform user of text file used
+	 */
 	// Make this class a singleton
 	private static BigramFrequency instance;
 	public static BigramFrequency getInstance() {
@@ -14,6 +24,7 @@ public class BigramFrequency implements FrequencyPlan{
 		return instance;
 	}
 	private Map<String,Double> scores;
+	/* This method id for calculating the bigram frequency scores */
 	private BigramFrequency ()
 	{
 		try {
@@ -31,24 +42,24 @@ public class BigramFrequency implements FrequencyPlan{
 					// ADD Q constant
 					sb.append(PlayfairConstants.EQUAL_CHAR2);
 					sb.append(i);
-					// GET 2grams and pass to map
 					double toAdd = frequencies.get(sb.toString());
 					frequencies.put(sb.toString(),0.0);
 					sb= new StringBuilder();
 					// ADD J constant
 					sb.append(PlayfairConstants.EQUAL_CHAR1);
 					sb.append(i);
-					// GET 2grams and pass to map
 					double freq=frequencies.get(sb.toString());
 					frequencies.put(sb.toString(), freq+toAdd);
 					
 					sb = new StringBuilder();
 					sb.append(i);
+					// ADD J constant
 					sb.append(PlayfairConstants.EQUAL_CHAR2);
 					toAdd = frequencies.get(sb.toString());
 					frequencies.put(sb.toString(),0.0);
 					sb= new StringBuilder();
 					sb.append(i);
+					// ADD Q constant
 					sb.append(PlayfairConstants.EQUAL_CHAR1);
 					freq=frequencies.get(sb.toString());
 					frequencies.put(sb.toString(), freq+toAdd);
@@ -117,6 +128,9 @@ public class BigramFrequency implements FrequencyPlan{
 		}
 		return result;
 	}
+	@Override
 	
-
+	public void getGram() {
+		System.out.println("Using the 2grams.txt file..");
+	}
 }
