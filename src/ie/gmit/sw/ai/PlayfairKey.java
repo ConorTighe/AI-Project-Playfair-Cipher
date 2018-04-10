@@ -43,6 +43,10 @@ public class PlayfairKey {
 	public String getKeyVal() {
 		return keyVal;
 	}
+	
+	public void setMatrix(char[] matrix) {
+		this.matrix = matrix;
+	}
 
 	// This method creates playfair matrix based on what the key is
 	public PlayfairKey(String key) {
@@ -85,6 +89,13 @@ public class PlayfairKey {
 						"Matrix may only contain uppercase alphabetic chars and can not contain char : "
 								+ PlayfairConstants.EQUAL_CHAR2);
 		this.matrix = matrix;
+		
+		for (int i = 0; i < matrix.length; i++) {
+			//System.out.println(i);
+			this.keyVal += matrix[i];
+		}
+		
+		System.out.println("finished cipher key in matrix: " + this.keyVal);
 		charToIndex = new HashMap<Character, Integer>();
 		populateCharToIndexMap();
 	}

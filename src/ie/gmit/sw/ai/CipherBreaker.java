@@ -119,7 +119,7 @@ public class CipherBreaker {
 					System.out.println("Enter code you need decrypted:");
 					String cipherText = sc.nextLine();
 					
-					System.out.println("SA fitness: " + sa.getFitness(cipherText, sol));
+					System.out.println("Solution fitness: " + sa.getFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText, BIGRAMS);
 					Playfair pf = new Playfair(key);
@@ -163,7 +163,7 @@ public class CipherBreaker {
 					System.out.println("Enter code you need decrypted:");
 					String cipherText = sc.nextLine();
 					
-					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
+					System.out.println("Solution fitness: " + sa.getQuadFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText, QUADGRAMS);
 					Playfair pf = new Playfair(key);
@@ -209,7 +209,7 @@ public class CipherBreaker {
 					String cipherText = readFile(fileName);
 					System.out.println(cipherText);
 					
-					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
+					System.out.println("Solution fitness: " + sa.getFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText, BIGRAMS);
 					Playfair pf = new Playfair(key);
@@ -258,7 +258,7 @@ public class CipherBreaker {
 					String cipherText = readFile(fileName);
 					System.out.println(cipherText);
 					
-					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
+					System.out.println("Solution fitness: " + sa.getQuadFitness(cipherText, sol));
 					
 					PlayfairKey key = sa.findKey(cipherText, QUADGRAMS);
 					Playfair pf = new Playfair(key);
@@ -328,9 +328,10 @@ public class CipherBreaker {
 		        int iterationsOnTemp = sc.nextInt();
 				SimulatedAnnealing sa = new SimulatedAnnealing(text, iterationsOnTemp);
 				
-				System.out.println("SA fitness: " + sa.getFitness(text, sol));
+				System.out.println("Solution fitness: " + sa.getFitness(text, sol));
 				
 				PlayfairKey key = sa.findKey(text, BIGRAMS);
+				
 				Playfair pf = new Playfair(key);
 				String plainText = pf.decrypt(text);
 				System.out.println("plain: " + plainText);
@@ -356,9 +357,10 @@ public class CipherBreaker {
 				int iterationsOnTemp = sc.nextInt();
 				SimulatedAnnealing sa = new SimulatedAnnealing(text, iterationsOnTemp);
 				
-				System.out.println("SA fitness: " + sa.getQuadFitness(text, sol));
+				System.out.println("Solution fitness: " + sa.getQuadFitness(text, sol));
 				
 				PlayfairKey key = sa.findKey(text, QUADGRAMS);
+				
 				Playfair pf = new Playfair(key);
 				String plainText = pf.decrypt(text);
 				System.out.println("plain: " + plainText);

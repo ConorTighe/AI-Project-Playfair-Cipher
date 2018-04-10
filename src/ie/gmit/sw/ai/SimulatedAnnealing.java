@@ -27,7 +27,7 @@ public class SimulatedAnnealing {
 	// Variables required for SA
 	private double maxTemp,step;
 	private int iterationsOnTemp;
-	private SecureRandom rand;
+	private SecureRandom rand = new SecureRandom();
 	
 	// Constructor for applying optimized simulated annealing
 	public SimulatedAnnealing(String code,int iterationsOnTemp) {
@@ -71,6 +71,7 @@ public class SimulatedAnnealing {
 		// new cipher depending on current node
 		Playfair playfair= new Playfair(parent);
 		// calculate current node fitness
+		
 		double parentFitness;
 		if(grams == 2) {
 			parentFitness = getFitness(cipherText, playfair);
@@ -100,6 +101,7 @@ public class SimulatedAnnealing {
 					childFitness = getQuadFitness(cipherText, playfair);
 				}
 				// calculate delta value
+				System.out.println(childFitness);
 				double df = childFitness - parentFitness;
 				boolean takeChild = false;
 				// new key better!!!!
