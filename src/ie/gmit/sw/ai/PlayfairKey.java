@@ -36,7 +36,7 @@ public class PlayfairKey {
 
 	private char matrix[];
 
-	private String keyVal;
+	private String keyVal = "";
 	private Map<Character, Integer> charToIndex;
 
 	// use this to get a hold of the original key string we used to create the matrix
@@ -46,7 +46,6 @@ public class PlayfairKey {
 
 	// This method creates playfair matrix based on what the key is
 	public PlayfairKey(String key) {
-		this.keyVal = key;
 		key = TextUtils.prepareKey(key);
 		Set<Character> available = new TreeSet<Character>();
 		for (char i = 'A'; i <= 'Z'; i++)
@@ -60,8 +59,17 @@ public class PlayfairKey {
 				matrix[matrixInd++] = c;
 			}
 		}
-		for (char c : available)
+		
+		for (char c : available) {
 			matrix[matrixInd++] = c;
+		}
+		
+		for (int i = 0; i < matrix.length; i++) {
+			//System.out.println(i);
+			this.keyVal += matrix[i];
+		}
+		
+		System.out.println("finished cipher key: " + this.keyVal);
 		charToIndex = new HashMap<Character, Integer>();
 		populateCharToIndexMap();
 	}
@@ -231,46 +239,6 @@ public class PlayfairKey {
 		return p;
 	}
 
-	// make new key off the string value in this class
-	public PlayfairKey makeChildKey() {
-	    String newKey = getKeyVal();
-	    //System.out.println("newKey: " + newKey);
-		SecureRandom r = new SecureRandom();
-		//Random integer value
-		int num = r.nextInt(100);
-		
-		if(num >= 0 && num < 2) {
-			newKey = swapRows(newKey, r.nextInt(4), r.nextInt(4));
-			//System.out.print("newKey1:" + newKey);
-		} else if ( num >= 2 && num < 4) {
-			newKey = swapCols(newKey, r.nextInt(4), r.nextInt(4));
-			//System.out.print("newKey2:" + newKey);
-		} else if ( num >= 4 && num < 6) {
-			newKey = flipRows(newKey);
-			//System.out.print("newKey3:" + newKey);
-		} else if ( num >= 6 && num < 8) {
-			newKey = flipCols(newKey);
-			//System.out.print("newKey4:" + newKey);
-		} else if ( num >= 8 && num < 10) {
-			newKey = new StringBuffer(newKey).reverse().toString();
-			//System.out.print("newKey5:" + newKey);
-		} else {
-			//System.out.println("newKey6: " + newKey);
-			//System.out.println(newKey.length()-1);
-			int a = r.nextInt(newKey.length()-1);
-			int b = r.nextInt(newKey.length()-1);
-			b = (a == b) ? (b == newKey.length()-1) ? b - 1 : b + 1 : r.nextInt(newKey.length()-1);
-			char[] res = newKey.toCharArray();
-			char tmp = res[a];
-			res[a] = res[b];
-			res[b] = tmp;
-			newKey = String.copyValueOf(res);
-			return new PlayfairKey(newKey);
-		} // end if else for % of time do x
-		
-		return new PlayfairKey(newKey);
-		
-	}
 	
 	// Generate key by passing matrix in this class
 	public PlayfairKey makeChildKeyFromMatrix() {
@@ -306,64 +274,9 @@ public class PlayfairKey {
 				while (a == b)
 					b = r.nextInt(25);// randomize positions
 				swapMatrixChars(newMatrix, a, b);
-		}
+		} // end if else
 		
 		return new PlayfairKey(newMatrix);
-	}
-	
-	// Turn rows upside down
-	private String flipRows(String key) {
-		String[] rows = new String[5];
-		StringBuilder sb = new StringBuilder();
-		
-		for(int i = 0; i < 5; i++) {
-			rows[i] = key.substring(i*5, i*5 + 5);
-			rows[i] = new StringBuffer(rows[i]).reverse().toString();
-			sb.append(rows[i]);
-		}
-		return sb.toString();
-	}
-	
-	// Turn columns upside down
-	private String flipCols(String key) {
-		char[] cols = key.toCharArray();
-		int length = key.length() - (key.length()/5);
-		
-		for(int i = 0; i < key.length() / 5; i++) {
-			for(int j = 0; j < key.length() / 5; j++) {
-				char tmp = key.charAt(i*5 + j);
-				cols[(i*5) + j] =  key.charAt(length + j);
-				cols[length + j] =  tmp;
-			}
-			length -= 5;
-		}
-		return new String(cols);
-	}
-	
-	//Move rows around
-	private String swapRows(String key, int row1, int row2) {	
-		return (row1 == row2) ? swapRows(key, new SecureRandom().nextInt(4), new SecureRandom().nextInt(4)) :  rearrange(key, row1, row2, true);
-	}
-	
-	// Move columns around
-	private String swapCols(String key, int col1, int col2) {
-		return (col1 == col2) ? swapCols(key, new SecureRandom().nextInt(4), new SecureRandom().nextInt(4)) : rearrange(key, col1, col2, false);
-	}
-	
-	// Rearrangement of key
-	private String rearrange(String key, int a, int b, boolean row) {
-			char[] newKey = key.toCharArray();
-			if(row) {
-				a *= 5;
-				b *= 5;
-			} 
-			for(int i = 0; i < key.length() / 5 ; i++) {
-				int index = (row) ? i : i*5;
-				char tmp =  newKey[(index + a)];
-				newKey[(index + a)] = newKey[(index + b)];
-				newKey[(index + b)] = tmp;				
-			}
-			return new String(newKey);
 	}
 	
 	// switch characters around in matrix

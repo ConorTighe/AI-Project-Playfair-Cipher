@@ -7,7 +7,7 @@ import java.util.Map;
 /***
  * 
  * @author Conor Tighe
- * This is the class that handles that calculation of the frequencies using the 2gram diagrams
+ * This is the class that handles that calculation of the frequencies using the 2gram diagrams, It replaces J with I and uses X for double values
  */
 public class BigramFrequency implements FrequencyPlan{
 
@@ -34,7 +34,7 @@ public class BigramFrequency implements FrequencyPlan{
 			// Move though alphabet
 			for (char i='A';i<='Z';i++)
 			{
-				// If NOT a defined PlayfairConstant(Letter Q or J, X for dups)
+				// If NOT a defined PlayfairConstant(Letter I or J, X for dups)
 				if (i!=PlayfairConstants.EQUAL_CHAR2)
 				{
 					// Build a string and apply estimated CHAR
@@ -119,6 +119,7 @@ public class BigramFrequency implements FrequencyPlan{
 	}
 	// Return fitness results
 	public double getTextFitness(String text) {
+		//getGram();
 		double result = 0;
 		String preptext = TextUtils.prepareText(text);
 		for (int i=0;i<preptext.length()-1;i++)
@@ -131,6 +132,6 @@ public class BigramFrequency implements FrequencyPlan{
 	@Override
 	
 	public void getGram() {
-		System.out.println("Using the 2grams.txt file..");
+		System.out.println("Scoring with the 2grams..");
 	}
 }

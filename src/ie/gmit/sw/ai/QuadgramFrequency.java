@@ -46,6 +46,7 @@ public class QuadgramFrequency implements FrequencyPlan {
 	@Override
 	// return the fitness of the frequencies
 	public double getTextFitness(String text) {
+		//getGram();
 		double result = 0;
 		String preptext = TextUtils.prepareText(text);
 		for (int i=0;i<preptext.length()-3;i++)
@@ -59,6 +60,6 @@ public class QuadgramFrequency implements FrequencyPlan {
 	}
 	@Override
 	public void getGram() {
-		System.out.println("Using the 2grams.txt file..");
+		System.out.println("Scoring with the 4grams..");
 	}
 }

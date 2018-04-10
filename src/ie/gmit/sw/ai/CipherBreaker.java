@@ -23,6 +23,9 @@ public class CipherBreaker {
 	 * @throws IOException
 	 */
 	
+	// these are the flags for our diagram files when SA gets called
+	final static int BIGRAMS = 2;
+	final static int QUADGRAMS = 4;
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Playfair Cipher Project - G00314417");
@@ -57,7 +60,7 @@ public class CipherBreaker {
 		        System.out.println("Enter a key:");
 		        String key = sc.next();
 				Playfair playfair = new Playfair(key);
-				//playfair.showMatrix();
+				playfair.showMatrix();
 				System.out.println("Enter text to ecrypt:");
 				sc.nextLine();
 				String text = sc.nextLine();
@@ -77,7 +80,7 @@ public class CipherBreaker {
 		        System.out.println("Enter a key:");
 		        String key = sc.next();
 				Playfair playfair = new Playfair(key);
-				//playfair.showMatrix();
+				playfair.showMatrix();
 				System.out.print("Enter the name of the txt file you want to encrypt: ");
 				sc.nextLine();
 				String fileName = sc.nextLine();
@@ -103,6 +106,7 @@ public class CipherBreaker {
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
+					sol.showMatrix();
 					
 					System.out.println("Enter max temperature:");
 					double maxTemp = sc.nextDouble();
@@ -117,7 +121,7 @@ public class CipherBreaker {
 					
 					System.out.println("SA fitness: " + sa.getFitness(cipherText, sol));
 					
-					PlayfairKey key = sa.findKey(cipherText);
+					PlayfairKey key = sa.findKey(cipherText, BIGRAMS);
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
 					System.out.println("plain: " + plainText);
@@ -145,6 +149,7 @@ public class CipherBreaker {
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
+					sol.showMatrix();
 					
 					System.out.println("Enter max temperature:");
 					double maxTemp = sc.nextDouble();
@@ -160,7 +165,7 @@ public class CipherBreaker {
 					
 					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
 					
-					PlayfairKey key = sa.findKey(cipherText);
+					PlayfairKey key = sa.findKey(cipherText, QUADGRAMS);
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
@@ -188,7 +193,7 @@ public class CipherBreaker {
 			        String solution = sc.nextLine();
 			        System.out.println(solution);
 					Playfair sol = new Playfair(solution);
-					
+					sol.showMatrix();
 					System.out.println("Enter max temperature:");
 					double maxTemp = sc.nextDouble();
 			        System.out.println("Enter temperature steps:");
@@ -206,7 +211,7 @@ public class CipherBreaker {
 					
 					System.out.println("SA Solution: " + sa.getFitness(cipherText, sol));
 					
-					PlayfairKey key = sa.findKey(cipherText);
+					PlayfairKey key = sa.findKey(cipherText, BIGRAMS);
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
@@ -255,7 +260,7 @@ public class CipherBreaker {
 					
 					System.out.println("SA Solution: " + sa.getQuadFitness(cipherText, sol));
 					
-					PlayfairKey key = sa.findKey(cipherText);
+					PlayfairKey key = sa.findKey(cipherText, QUADGRAMS);
 					Playfair pf = new Playfair(key);
 					String plainText = pf.decrypt(cipherText);
 					System.out.println(plainText);
@@ -325,7 +330,7 @@ public class CipherBreaker {
 				
 				System.out.println("SA fitness: " + sa.getFitness(text, sol));
 				
-				PlayfairKey key = sa.findKey(text);
+				PlayfairKey key = sa.findKey(text, BIGRAMS);
 				Playfair pf = new Playfair(key);
 				String plainText = pf.decrypt(text);
 				System.out.println("plain: " + plainText);
@@ -353,7 +358,7 @@ public class CipherBreaker {
 				
 				System.out.println("SA fitness: " + sa.getQuadFitness(text, sol));
 				
-				PlayfairKey key = sa.findKey(text);
+				PlayfairKey key = sa.findKey(text, QUADGRAMS);
 				Playfair pf = new Playfair(key);
 				String plainText = pf.decrypt(text);
 				System.out.println("plain: " + plainText);

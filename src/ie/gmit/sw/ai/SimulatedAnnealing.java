@@ -1,5 +1,6 @@
 package ie.gmit.sw.ai;
 
+import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
 
 /***
@@ -26,11 +27,12 @@ public class SimulatedAnnealing {
 	// Variables required for SA
 	private double maxTemp,step;
 	private int iterationsOnTemp;
+	private SecureRandom rand;
 	
 	// Constructor for applying optimized simulated annealing
 	public SimulatedAnnealing(String code,int iterationsOnTemp) {
-		this.maxTemp = ((10 + 0.087 * (code.length() - 84)));
-		this.step = this.maxTemp / 3;
+		this.maxTemp = ((10.0 + 0.087 * (code.length() - 84)));
+		this.step = this.maxTemp / 3.0;
 		System.out.println("Maximum Tempature: " + this.maxTemp);
 		System.out.println("Tempature cooldown: "+ this.step);
 		this.iterationsOnTemp=iterationsOnTemp;
@@ -55,20 +57,26 @@ public class SimulatedAnnealing {
 		String candidate = playfair.decrypt(cipherText);
 		return QuadgramFrequency.getInstance().getTextFitness(candidate);
 	}
-	// find key for cipher
-	public PlayfairKey findKey(String cipherText)
+	// find key for cipher using ciphered text and grams flag
+	public PlayfairKey findKey(String cipherText, int grams)
 	{	
-		// store best fitness
+		// for store best fitness
 		double bestFitness = Double.NEGATIVE_INFINITY;
 		
 		// current node
 		PlayfairKey parent = PlayfairKey.getRandomKey();
+		System.out.println("parent:" + parent);
 		// store best key so far
 		PlayfairKey bestKey = null;
 		// new cipher depending on current node
 		Playfair playfair= new Playfair(parent);
 		// calculate current node fitness
-		double parentFitness = getFitness(cipherText, playfair);
+		double parentFitness;
+		if(grams == 2) {
+			parentFitness = getFitness(cipherText, playfair);
+		}else {
+			parentFitness = getQuadFitness(cipherText, playfair);
+		}
 		long startTime = System.currentTimeMillis();
 		// move through out nodes using tempature values
 		for (double temp = maxTemp; temp>0; temp-=step)
@@ -77,22 +85,26 @@ public class SimulatedAnnealing {
 			System.out.println(temp);
 			System.out.println(parentFitness);
 			//System.out.println(parent);
-			// take steps 
 			for (int it = 0; it<iterationsOnTemp; it++)
 			{
 				// create child node of parent
-				PlayfairKey child = parent.makeChildKey();
+				PlayfairKey child = parent.makeChildKeyFromMatrix();
 				
 				// set new key using child
 				playfair.setKey(child);
 				// get child fitness
-				double childFitness = getFitness(cipherText, playfair);
+				double childFitness;
+				if(grams == 2) {
+					childFitness = getFitness(cipherText, playfair);
+				}else {
+					childFitness = getQuadFitness(cipherText, playfair);
+				}
 				// calculate delta value
 				double df = childFitness - parentFitness;
 				boolean takeChild = false;
 				// new key better!!!!
 				if (df>0) takeChild = true;
-				else if (Math.random() < Math.exp(df/temp))takeChild=true;
+				else if (rand.nextDouble() < Math.exp(df/temp))takeChild=true;
 				// use this new node!!!
 				if (takeChild)
 				{
@@ -104,6 +116,7 @@ public class SimulatedAnnealing {
 				{
 					bestFitness = parentFitness;
 					bestKey = parent;
+					System.out.println("New best parent node!: " + bestKey + "New best parent fitness!: " + bestFitness);
 				}
 			}
 		}
@@ -114,6 +127,7 @@ public class SimulatedAnnealing {
 	    System.out.println("SA complete in " + seconds + " seconds");
 	    
 		// return back our best key 
+	    System.out.println("bk:" + bestKey);
 		return bestKey;
 	}
 	
